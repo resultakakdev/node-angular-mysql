@@ -1,8 +1,21 @@
 angular.module('myApp')
-	.controller('loginController',function($scope,User){
+	.controller('loginController',function($scope,User,Auth,$localStorage){
 		console.log("$scope:",$scope);
 		$scope.login = function(){
-			console.log('$scope.user:',$scope.user);
-			User.save($scope.user);
+			/*console.log('$scope.user:',$scope.user);
+			console.log("Auth:",Auth);
+			if($scope.user)
+				Auth.setCookie($scope.user.username)
+			console.log(Auth.isLoggedIn())*/
+			/*User.save($scope.user).then(function(res){
+				console.log("res:",res);
+				$localStorage.token=res.token
+			},function(err){
+				console.log("err:",err);
+			})*/
+			User.save($scope.user,function(res){
+				console.log("res:",res);
+				$localStorage.token=res.token
+			})
 		}
 	})

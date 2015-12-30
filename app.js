@@ -3,30 +3,25 @@ var app 	= express();
 var http 	= require('http');
 var router 	= express.Router();
 var bodyParser = require('body-parser');
-var expressSession = require('express-session');
-var cookieParser = require('cookie-parser');
+var mongoose = require('mongoose');
 
-app.use(cookieParser());
-app.use(expressSession({secret:'somesecrettokenhere'}));
+var port = process.env.PORT || 3000;
+var config = require('./server/config');
+
+
+mongoose.connect(config.database);
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser());
-
-var user = require('./server/controllers/userController');
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+app.use(bodyParser.json());
+app.set('superSecret', config.secret);
 
 app.get('/',function(req,res){
-	console.log("req.session:",req.session);
 	res.sendfile('./public/index.html');
 })
+require('./server/route')(app);
 
-app.post('/api/user',user.login);
-//require('./route')(app);
-
-
-// router.get('/',function(req,res){
-// 	res.json("first route is ok");
-// })
-var server 	= http.createServer(app).listen(3000,function(){
-	// console.log("server:",server.address().address);
-	// console.log("server:",server.address().port);
+var server 	= http.createServer(app).listen(port,function(){
 	console.log("Server running on:",server.address().address,":",server.address().port);
 });

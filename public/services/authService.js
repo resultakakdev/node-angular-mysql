@@ -1,11 +1,15 @@
-angular.module('authModule',[''])
-	.service('Auth', function($rootScope) {	
+angular.module('authService',['ngCookies'])
+	.service('Auth', function($rootScope,$cookies) {	
 
 		this.isLoggedIn = function() {
-			return $rootScope.loggedInStatus   
+			return ($cookies.get('user')!=="")   
 		}
 
 		this.currentUser = function(user) {
-			return $rootScope.user;
+			return $cookies.get('user');
+		}
+		this.setCookie = function(user){
+			$cookies.put('user', user);
 		}
 	});
+	

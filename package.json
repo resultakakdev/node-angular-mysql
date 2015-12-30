@@ -6,11 +6,14 @@
     "url": ""
   },
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.14.1",
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "express-sessions": "^1.0.5",
+    "jsonwebtoken": "^5.5.0",
+    "mongoose": "^4.3.4",
     "mysql": "^2.9.0"
   },
   "devDependencies": {},
